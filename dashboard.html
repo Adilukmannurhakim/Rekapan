@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Penjualan</title>
+    <link rel="stylesheet" href="Assets/dashboard.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="Controllers/dashboard.js" defer></script>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <h2>Rekapan</h2>
+            <ul>
+                <li><a href="#" class="active">Dashboard</a></li>
+                <li><a href="stok.html">Stok Pisau</a></li>
+                <li><a href="#">Laporan Transaksi</a></li>
+                <li><a href="index.html">Logout</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <header>
+                <h1>Ringkasan Penjualan</h1>
+                <p>Pantau Performa Toko Hari ini</p>
+            </header>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>Total Pendapatan</h3>
+                    <p class="stat-number">Rp 15.500.000</p>
+                    <span class="stat-desc positif">+12% dari bulan lalu</span>
+                </div>
+                <div class="card">
+                    <h3>Pisau Terjual</h3>
+                    <p class="stat-number">142 pcs</p>
+                    <span class="stat-desc">Bulan ini</span>
+                </div>
+                <div class="card">
+                    <h3>Stok Menipis</h3>
+                    <p class="stat-number alert">3 Produk</p>
+                    <span class="stat-desc">Segera Restock</span>
+                </div>
+            </div>
+            <div class="chart-container">
+                <h2>Tren Pendapatan Bulanan 2026</h2>
+                <canvas id="salesChart"></canvas>
+            </div>
+
+            <div class="table-container">
+                <h2>Transaksi Terakhir</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID Pesanan</th>
+                            <th>Nama Produk</th>
+                            <th>Kategori</th>
+                            <th>Jumlah</th>
+                            <th>Total Harga</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                <tbody>
+                    <tr>
+                        <td>PC-1011</td>
+                        <td>Chef Baja</td>
+                        <td>Dapur</td>
+                        <td>3</td>
+                        <td>Rp 1.250.999</td>
+                        <td><span class="status sukses">Selesai</span></td>
+                    </tr>
+                    <tr>
+                        <td>PC-1071</td>
+                        <td>Baja</td>
+                        <td>Outdoor</td>
+                        <td>6</td>
+                        <td>Rp 2.250.999</td>
+                        <td><span class="status sukses">Selesai</span></td>
+                    </tr>
+                    <tr>
+                        <td>PC-1019</td>
+                        <td>Damaskus</td>
+                        <td>Koleksi</td>
+                        <td>2</td>
+                        <td>Rp 250.999</td>
+                        <td><span class="status pending">Pending</span></td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    
+</body>
+</html>
