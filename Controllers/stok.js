@@ -1,3 +1,8 @@
+if(localStorage.getItem('isLoggedIn') !== 'true') {
+    alert("Akses ditolak");
+    window.location.href = 'index.html';
+}
+
 document.addEventListener('DOMContentLoaded', function(){
     const API_URL = 'http://localhost:3000/api/produk';
     let dataStok =[];
@@ -54,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function(){
             });
         }
         else{
-           response = await fetch(`${API_URL}${editId}`, {
+           response = await fetch(`${API_URL}/${editId}`, { 
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(produkData)
@@ -68,8 +73,8 @@ document.addEventListener('DOMContentLoaded', function(){
         }
 
             editId = null;
-            submitBtn.textContent = "Simpan Stok";
-            submitBtn.style.backgrounColor = "#1a1a2e";
+            submitBtn.textContent = "Simpan";
+            submitBtn.style.backgrounColor = "#fff";
 
         tampilkanData();
         productForm.reset();
@@ -83,8 +88,8 @@ document.addEventListener('DOMContentLoaded', function(){
         const tombolEdit = document.querySelectorAll('.btn-edit');
         tombolEdit.forEach(tombol => {
             tombol.addEventListener('click', function(){
-                editID = this.getAttribute('data-id');
-                const produkDipilih = dataStok.find(p.id == editId);
+                editId = this.getAttribute('data-id');
+                const produkDipilih = dataStok.find(p => p.id == editId);
 
                 document.getElementById('nama').value = produkDipilih.nama;
                 document.getElementById('kategori').value = produkDipilih.kategori;

@@ -47,24 +47,49 @@ app.post('/api/produk', (req, res) => {
 app.put('/api/produk/:id', (req, res) => {
     const { id } = req.params;
     const { nama, kategori, harga, stok} = req.body;
-    const sql = "UPDATE produk SET namaBarang = ?, kategori =?,, harga =?, stok =? WHERE id = ?";
+    const sql = "UPDATE produk SET nama = ?, kategori = ?, harga = ?, stok = ? WHERE id = ?";
 
     db.query(sql, [nama, kategori, harga, stok, id], (err, result) => {
-        if (err) return res.status(500).json({ error: err.message});
+        if (err){
+            console.error("Detail Eror", err.message);
+            return res.status(500).json({ error: err.message});
+        }
+            
         res.json({message: "Data Berhasil Diperbarui"});
     });
 });
 
-app.put('/api/produk/:id', (req, res) =>{
+app.delete('/api/produk/:id', (req, res) => {
     const { id } = req.params;
     const sql = "DELETE FROM produk WHERE id = ?";
 
     db.query(sql, [id], (err, result) => {
-        if (err) return res.status(500).json({ error: err.message});
+        if (err) {
+            console.error(" Error DELETE", err.message);
+            return res.status(500).json({ error: err.message});
+        }
+            
         res.json({message: "Data berhasil dihapus"});
     });
 });
 
+app.post('/api/login', (req, res) => {
+    const { username, password } = req.body;
+    const sql = "SELECT * FROM pengguna WHERE username = ? AND password =?";
+
+    db.query (sql, [username, password], (err,results) => {
+        if (err) {
+            console.error("Eror Login", err.message);
+            return res.status(500).json({success: false, error: err.message});
+        }
+        if (results.length > 0) {
+            res.json({success: true, message: "Login Berhasil", user: results[0].username});
+        }
+        else {
+            res.status(401).json({ success: false, message: "Username Password salah"});
+        }
+    });
+});
 app.listen(PORT, () => {
     console.log(`Server Backend berjalan di http://localhost:${PORT}`);
 });

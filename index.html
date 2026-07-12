@@ -6,14 +6,14 @@
     <title>From login belajar</title>
 
     <link rel="stylesheet" href="Assets/style.css">
-    <script src="Controllers/skript.js" defer></script>
+
 </head>
 <body>
     
     <div class="login">
         <h2>Selamat datang</h2>
 
-        <form id="FormLogin" action="#" method="POST">
+        <form id="FormLogin">
             <div class="input-group">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" placeholder="Masukan Username" required> 
@@ -25,5 +25,37 @@
             <button type="submit" class="btn-login">Login</button>
         </form>
     </div>
+    <script>
+        document.getElementById('FormLogin').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const usernameInput = document.getElementById('username').value;
+            const passwordInput = document.getElementById('password').value;
+
+            try{
+                const response = await fetch('http://localhost:3000/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json'},
+                    body: JSON.stringify({ username: usernameInput, password: passwordInput})
+                });
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('username', result.user);
+
+                    alert('Selamat Datang');
+                    window.location.href = 'dashboard.html';
+                }
+                else {
+                    alert('X'+ result.message);
+                }
+            }
+            catch (error) {
+                console.error(erroe);
+                alert('Gagal Terhubung');
+            }
+        });
+    </script>
 </body>
 </html>

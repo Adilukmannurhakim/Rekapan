@@ -108,7 +108,7 @@ header p{
 
 .table-container {
     background-color: #fff;
-    padding: 25px;
+    padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0,0.05);
     margin-bottom: 40px;
@@ -121,7 +121,7 @@ header p{
 }
 
 table{
-    width: 100px;
+    width: 900px;
     border-collapse: collapse;
     text-align: left;
 }
