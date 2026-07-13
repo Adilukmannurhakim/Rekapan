@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Transaksi - Stok</title>
+        <link rel="stylesheet" href="Assets/dashboard.css">
+    <!-- Menghubungkan ke file CSS yang sudah dipisah -->
+    <link rel="stylesheet" href="Assets/transaksi.css">
+    <!-- Menghubungkan ke logika JS khusus transaksi -->
+    <script src="Controllers/transaksi.js" defer></script>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        
+        <!-- 1. BAGIAN SIDEBAR (Sesuai Desain Anda) -->
+        <div class="sidebar">
+            <h1 class="sidebar-title">Stok</h1>
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="stok.html">Stok</a></li>
+                <!-- Di halaman ini, Laporan Transaksi yang menggunakan class active -->
+                <li><a href="transaksi.html" class="active">Laporan Transaksi</a></li>
+                <li><a href="#" id="menuLogout">Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- 2. BAGIAN KONTEN UTAMA -->
+        <div class="main-content">
+            
+            <!-- HALAMAN TRANSAKSI -->
+            <div id="halamanTransaksi">
+                <h2>📊 Laporan Transaksi</h2>
+                
+                <table class="tabel-transaksi">
+                    <thead>
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>Nama Produk</th>
+                            <th>Tipe</th>
+                            <th>Jumlah</th>
+                            <th>Total Harga</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bodyTransaksi">
+                        <!-- Data akan otomatis disuntik via transaksi.js -->
+                    </tbody>
+                </table>
+            </div>
+
+        </div> <!-- /.main-content -->
+
+    </div> <!-- /.dashboard-container -->
+    
+</body>
+</html>

@@ -1,0 +1,47 @@
+/* ==========================================
+   STYLE HALAMAN LAPORAN TRANSAKSI (DARK MODE)
+   ========================================== */
+
+/* SEBELUMNYA: display: none; */
+#halamanTransaksi {
+    display: block; /* 👈 UBAH MENJADI BLOCK AGAR KONTENNYA MUNCUL */
+}
+
+#halamanTransaksi h2 {
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+/* ... kode css yang bawahnya biarkan saja ... */
+
+/* Styling Tabel Modern */
+.tabel-transaksi {
+    width: 100%;
+    border-collapse: collapse;
+    color: #ffffff;
+}
+
+.tabel-transaksi thead tr {
+    background-color: #ff4a68; /* Warna pink/merah sesuai tombol aktif sidebar */
+    color: #ffffff;
+    text-align: left;
+}
+
+.tabel-transaksi th, 
+.tabel-transaksi td {
+    padding: 12px;
+}
+
+.tabel-transaksi tbody tr {
+    border-bottom: 1px solid #2e2e48; /* Garis pembatas tipis */
+}
+
+/* Badge Warna Tipe Transaksi */
+.status-masuk {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.status-keluar {
+    color: #ff4a68;
+    font-weight: bold;
+}

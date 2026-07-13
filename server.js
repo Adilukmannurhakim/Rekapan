@@ -90,6 +90,21 @@ app.post('/api/login', (req, res) => {
         }
     });
 });
+
+app.get('/api/transaksi', (req, res) => {
+    
+    // 2. PERBAIKAN: Mengubah 'tanggaj' menjadi 'tanggal' DESC (terbaru di atas)
+    const sql = "SELECT * FROM transaksi ORDER BY tanggal DESC"; 
+    
+    db.query(sql, (err, results) => {
+        if(err) {
+            console.error("Error transaksi", err.message);
+            return res.status(500).json({ error: err.message});
+        }
+        res.json(results);
+    });
+});
+
 app.listen(PORT, () => {
     console.log(`Server Backend berjalan di http://localhost:${PORT}`);
 });
