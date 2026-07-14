@@ -113,15 +113,18 @@
 
 /* Styling Tabel Modern */
 .tabel-transaksi {
-    width: 100%;
-    border-collapse: collapse;
-    color: #ffffff;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0,0.05);
+    margin-bottom: 40px;
 }
 
 .tabel-transaksi thead tr {
-    background-color: #ff4a68; /* Warna pink/merah sesuai tombol aktif sidebar */
-    color: #ffffff;
-    text-align: left;
+    background-color: #f8f9fa;
+    color: #2f353b;
+    border-radius: 100px;
+    font-weight: 600;
 }
 
 

@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
                 submitBtn.textContent = "Perbarui Produk";
                 submitBtn.style.backgrounColor = "#ffc107";
-                submitBtn.style.color = "#1a1a2e";
+                submitBtn.style.color = "#ffffff";
             });
         });
     }

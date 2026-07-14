@@ -4,38 +4,44 @@
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-body{
+body {
     background-color: #91afdb;
     color: rgb(0, 0, 0);
+    margin: 0;          /* Menghilangkan margin bawaan browser */
+    height: 100vh;      /* Mengunci tinggi body sesuai tinggi layar */
+    overflow: hidden;   /* Mematikan scroll global pada halaman web */
 }
 
-.dashboard-container{
+.dashboard-container {
     display: flex;
-    min-height: 100vh;
+    height: 100vh;      /* Diubah dari min-height menjadi height pas 100% layar */
 }
 
-.sidebar{
+.sidebar {
     width: 200px;
     background-color: #1a1a2e;
     color: #fff;
     padding: 25px 20px;
+    flex-shrink: 0;     /* KUNCI: Mencegah sidebar menyusut/gepeng */
+    box-sizing: border-box; /* Memastikan padding tidak merusak ukuran lebar */
 }
 
-.sidebar h2{
+.sidebar h2 {
     margin-bottom: 40px;
     text-align: center;
     color: #ffffff;
     letter-spacing: 2px;
 }
 
-.sidebar ul{
+.sidebar ul {
     list-style: none;
 }
 
-.sidebar ul li{
+.sidebar ul li {
     margin-bottom: 15px;
 }
-.sidebar ul li a{
+
+.sidebar ul li a {
     color: #adb5bd;
     text-decoration: double;
     display: block;
@@ -44,14 +50,18 @@ body{
     transition: 0.3s;
 }
 
-.sidebar ul li a:hover, .sidebar ul li a.active{
+.sidebar ul li a:hover, .sidebar ul li a.active {
     background-color: #e94560;
     color: #fff;
 }
 
-.main-content{
+/* BAGIAN YANG BANYAK DIUBAH */
+.main-content {
     flex: 1;
     padding: 40px;
+    height: 100vh;      /* Setinggi layar penuh */
+    overflow-y: auto;   /* KUNCI: Scroll vertikal aktif hanya di area konten ini */
+    box-sizing: border-box; /* Menjaga padding 40px tetap rapi di dalam box */
 }
 header{
     margin-bottom: 35px;

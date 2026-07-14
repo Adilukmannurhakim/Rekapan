@@ -47,13 +47,13 @@ body{
     outline: none;
 }
 
-.btn_login{
+.btn-login{
     width: 100%;
     padding: 12px;
     background-color: #007bff;
     border: none;
     border-radius: 6px;
-    color: rgb(156, 25, 25);
+    color: rgb(255, 255, 255);
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
