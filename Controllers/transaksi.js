@@ -4,37 +4,54 @@ if (localStorage.getItem('isLoggedIn') !== 'true') {
     window.location.href = 'index.html';
 }
 
-// 2. Jalankan fungsi ambil data otomatis saat halaman terbuka
+// 2. DOM Elements Modal
+const modal = document.getElementById('modalTransaksi');
+const formTransaksi = document.getElementById('formTransaksi');
+const modalTitle = document.getElementById('modalTitle');
+const transaksiIdInput = document.getElementById('transaksiId');
+
+// Buka modal untuk Tambah Data Baru
+// Pemicu buka modal Tambah Data Baru
+document.getElementById('btnBukaModal').addEventListener('click', () => {
+    modalTitle.innerText = "Catat Transaksi Baru";
+    formTransaksi.reset();
+    transaksiIdInput.value = ""; 
+    modal.style.display = "block";
+    
+    // PANGGIL FUNGSI INI AGAR DROPDOWN SELALU TERBARU DARI DATABASE
+    muatDropdownProduk(); 
+});
+
+// Tutup Modal
+document.getElementById('btnTutupModal').addEventListener('click', () => {
+    modal.style.display = "none";
+});
+
+// Jalankan pengambilan data pertama kali saat load
 ambilDataTransaksi();
 
-// 3. Fungsi Ambil Data Transaksi Dari Server Backend
+// 3. READ DATA (Menampilkan Transaksi + Tombol Aksi)
 async function ambilDataTransaksi() {
     const bodyTransaksi = document.getElementById('bodyTransaksi');
     if (!bodyTransaksi) return;
 
-    bodyTransaksi.innerHTML = '<tr><td colspan="5" style="text-align:center;">Memuat data transaksi...</td></tr>';
+    bodyTransaksi.innerHTML = '<tr><td colspan="6" style="text-align:center;">Memuat data transaksi...</td></tr>';
 
     try {
         const response = await fetch('http://localhost:3000/api/transaksi');
         const data = await response.json();
-
-        bodyTransaksi.innerHTML = ''; // Bersihkan tulisan loading
+        bodyTransaksi.innerHTML = ''; 
 
         if (data.length === 0) {
-            bodyTransaksi.innerHTML = '<tr><td colspan="5" style="text-align:center;">Belum ada riwayat transaksi.</td></tr>';
+            bodyTransaksi.innerHTML = '<tr><td colspan="6" style="text-align:center;">Belum ada riwayat transaksi.</td></tr>';
             return;
         }
 
-        // Looping data dari MySQL ke dalam tabel HTML
         data.forEach(trx => {
             const row = document.createElement('tr');
-            
-            // Format tanggal agar rapi
             const tanggalFormat = new Date(trx.tanggal).toLocaleDateString('id-ID', {
                 year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
             });
-
-            // Gunakan class warna dari CSS
             const classWarna = trx.tipe === 'Masuk' ? 'status-masuk' : 'status-keluar';
 
             row.innerHTML = `
@@ -43,16 +60,140 @@ async function ambilDataTransaksi() {
                 <td><span class="${classWarna}">${trx.tipe}</span></td>
                 <td>${trx.jumlah} pcs</td>
                 <td>Rp ${trx.total_harga.toLocaleString('id-ID')}</td>
+                <td>
+                    <button class="btn-edit" onclick="siapkanEdit(${trx.id}, '${trx.nama_produk}', '${trx.tipe}', ${trx.jumlah}, ${trx.total_harga})">✏️ Edit</button>
+                    <button class="btn-hapus" onclick="hapusTransaksi(${trx.id})">🗑️ Hapus</button>
+                </td>
             `;
             bodyTransaksi.appendChild(row);
         });
     } catch (error) {
         console.error(error);
-        bodyTransaksi.innerHTML = '<tr><td colspan="5" style="text-align:center; color: #ff4a68;">Gagal mengambil data dari server.</td></tr>';
+        bodyTransaksi.innerHTML = '<tr><td colspan="6" style="text-align:center; color: #ff4a68;">Gagal mengambil data dari server.</td></tr>';
     }
 }
 
-// 4. Fungsi Tombol Logout
+// 1. MEMUAT DROPDOWN SEKALIGUS MENYIMPAN HARGA SATUAN
+async function muatDropdownProduk() {
+    const trxNamaSelect = document.getElementById('trxNama');
+    if (!trxNamaSelect) return;
+
+    try {
+        const response = await fetch('http://localhost:3000/api/produk');
+        const produkList = await response.json();
+
+        // Reset dropdown, sisakan opsi pertama
+        trxNamaSelect.innerHTML = '<option value="">-- Pilih Produk --</option>';
+
+        // Masukkan produk & simpan HARGA SATUAN di atribut 'data-harga'
+        produkList.forEach(prod => {
+            const opt = document.createElement('option');
+            opt.value = prod.nama; 
+            opt.dataset.harga = prod.harga; // <-- KUNCI: Menyimpan harga satuan produk
+            opt.innerText = `${prod.nama} (Stok: ${prod.stok} | Rp ${prod.harga.toLocaleString('id-ID')}/pcs)`;
+            trxNamaSelect.appendChild(opt);
+        });
+    } catch (error) {
+        console.error("Gagal memuat daftar produk untuk dropdown:", error);
+    }
+}
+
+// 2. FUNGSI MENGHITUNG TOTAL HARGA OTOMATIS
+function hitungTotalOtomatis() {
+    const selectProduk = document.getElementById('trxNama');
+    const inputJumlah = document.getElementById('trxJumlah');
+    const inputTotalHarga = document.getElementById('trxHarga');
+
+    // Ambil opsi produk yang sedang terpilih
+    const opsiTerpilih = selectProduk.options[selectProduk.selectedIndex];
+    
+    // Jika produk belum dipilih atau jumlah masih kosong, set total ke 0
+    if (!opsiTerpilih || !opsiTerpilih.dataset.harga || !inputJumlah.value) {
+        inputTotalHarga.value = 0;
+        return;
+    }
+
+    // Hitung Rumus: Harga Satuan x Jumlah Pcs
+    const hargaSatuan = parseInt(opsiTerpilih.dataset.harga);
+    const jumlahPcs = parseInt(inputJumlah.value) || 0;
+    
+    // Masukkan hasil perkalian ke dalam input Total Harga
+    inputTotalHarga.value = hargaSatuan * jumlahPcs;
+}
+
+// 3. PASANG EVENT LISTENER (Berjalan setiap kali user memilih produk atau mengetik jumlah)
+document.getElementById('trxJumlah').addEventListener('input', hitungTotalOtomatis);
+document.getElementById('trxNama').addEventListener('change', hitungTotalOtomatis);
+
+// 4. CREATE & UPDATE (Proses Simpan Data)
+formTransaksi.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const id = transaksiIdInput.value;
+    const payload = {
+        nama_produk: document.getElementById('trxNama').value,
+        tipe: document.getElementById('trxTipe').value,
+        jumlah: parseInt(document.getElementById('trxJumlah').value),
+        total_harga: parseInt(document.getElementById('trxHarga').value)
+    };
+
+    // Deteksi apakah Mode Edit atau Tambah Baru
+    const url = id ? `http://localhost:3000/api/transaksi/${id}` : 'http://localhost:3000/api/transaksi';
+    const method = id ? 'PUT' : 'POST';
+
+    try {
+        const response = await fetch(url, {
+            method: method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+            alert(id ? "Data transaksi berhasil diperbarui!" : "Transaksi baru berhasil dicatat!");
+            modal.style.display = "none";
+            ambilDataTransaksi(); // Reload tabel otomatis
+        } else {
+            alert("Gagal menyimpan data!");
+        }
+    } catch (error) {
+        console.error(error);
+        alert("Eror saat menghubungi server.");
+    }
+});
+
+// 5. UPDATE PREPARATION (Lempar data baris ke dalam form modal)
+window.siapkanEdit = function(id, nama, tipe, jumlah, harga) {
+    modalTitle.innerText = "Ubah Data Transaksi";
+    transaksiIdInput.value = id;
+    document.getElementById('trxNama').value = nama;
+    document.getElementById('trxTipe').value = tipe;
+    document.getElementById('trxJumlah').value = jumlah;
+    document.getElementById('trxHarga').value = harga;
+    modal.style.display = "block";
+};
+
+// 6. DELETE DATA (Hapus riwayat transaksi)
+window.hapusTransaksi = async function(id) {
+    if (confirm("Apakah Anda yakin ingin menghapus data riwayat transaksi ini secara permanen?")) {
+        try {
+            const response = await fetch(`http://localhost:3000/api/transaksi/${id}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                alert("Data riwayat transaksi berhasil dihapus!");
+                ambilDataTransaksi(); // Reload tabel otomatis
+            } else {
+                alert("Gagal menghapus data!");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Eror saat menghubungkan ke server.");
+        }
+    }
+};
+
+// 7. Tombol Logout
 document.getElementById('menuLogout').addEventListener('click', function(e) {
     e.preventDefault();
     if (confirm("Apakah Anda yakin ingin keluar aplikasi?")) {

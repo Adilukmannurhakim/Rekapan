@@ -250,3 +250,65 @@ table th{
 .btn-edit:hover {
     background-color: #e0a800;
 }
+
+/* Kontainer Box Putih Meniru Halaman Stok */
+.konten-box-putih {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-top: 10px;
+}
+
+/* Pengaturan Tabel di Dalam Box Putih */
+.tabel-stok-gaya {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.tabel-stok-gaya th {
+    background-color: #f8f9fa;
+    color: #495057;
+    font-weight: 600;
+    text-align: left;
+    padding: 15px 12px;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.tabel-stok-gaya td {
+    padding: 15px 12px;
+    border-bottom: 1px solid #ebebeb;
+    color: #495057;
+    vertical-align: middle;
+}
+
+/* Membuat Teks Nama Produk Tebal Seperti Halaman Stok */
+.tabel-stok-gaya td strong {
+    color: #1e1e2f;
+}
+
+/* Gaya Tombol Aksi Baru (Kuning & Merah agar Serasi) */
+.btn-aksi-edit {
+    background-color: #ffc107; /* Kuning/Oranye Stok */
+    color: #000;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.btn-aksi-hapus {
+    background-color: #dc3545; /* Merah Stok */
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.btn-aksi-edit:hover { background-color: #e0a800; }
+.btn-aksi-hapus:hover { background-color: #bd2130; }

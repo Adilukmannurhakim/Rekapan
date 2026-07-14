@@ -1,7 +1,105 @@
 /* ==========================================
    STYLE HALAMAN LAPORAN TRANSAKSI (DARK MODE)
    ========================================== */
+.header-transaksi {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}.btn-tambah{
+    background-color: #ff4a68;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
 
+.btn-edit {
+    background-color: #2f89fc;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.btn-hapus {
+    background-color: #e43f5a;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* System Modal Popup (Dark Mode) */
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+}
+
+.modal-content {
+    background-color: #1f1f38;
+    margin: 10% auto;
+    padding: 25px;
+    border-radius: 8px;
+    width: 400px;
+    color: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    color: #aaa;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.close-btn:hover { color: white; }
+
+/* Form di dalam Modal */
+.form-group {
+    margin-bottom: 15px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #2e2e48;
+    background-color: #16162a;
+    color: white;
+    box-sizing: border-box;
+}
+
+.btn-simpan {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
 /* SEBELUMNYA: display: none; */
 #halamanTransaksi {
     display: block; /* 👈 UBAH MENJADI BLOCK AGAR KONTENNYA MUNCUL */
@@ -26,7 +124,7 @@
     text-align: left;
 }
 
-.tabel-transaksi th, 
+
 .tabel-transaksi td {
     padding: 12px;
 }

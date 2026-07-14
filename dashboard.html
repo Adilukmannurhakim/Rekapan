@@ -27,23 +27,26 @@
                 <h1>Ringkasan Penjualan</h1>
                 <p>Pantau Performa Toko Hari ini</p>
             </header>
+            
+            <!-- 1. BERI ID PADA MASING-MASING ANGKA STATISTIK -->
             <div class="cards-grid">
                 <div class="card">
                     <h3>Total Pendapatan</h3>
-                    <p class="stat-number">Rp 15.500.000</p>
-                    <span class="stat-desc positif">+12% dari bulan lalu</span>
+                    <p class="stat-number" id="statPendapatan">Rp 0</p>
+                    <span class="stat-desc positif">Semua Penjualan</span>
                 </div>
                 <div class="card">
                     <h3>Produk Terjual</h3>
-                    <p class="stat-number">142 pcs</p>
+                    <p class="stat-number" id="statTerjual">0 Pcs</p>
                     <span class="stat-desc">Bulan ini</span>
                 </div>
                 <div class="card">
                     <h3>Stok Menipis</h3>
-                    <p class="stat-number alert">3 Produk</p>
-                    <span class="stat-desc">Segera Restock</span>
+                    <p class="stat-number alert" id="statMenipis">0 Produk</p>
+                    <span class="stat-desc">Stok di bawah 10 pcs</span>
                 </div>
             </div>
+            
             <div class="chart-container">
                 <h2>Tren Pendapatan Bulanan 2026</h2>
                 <canvas id="salesChart"></canvas>
@@ -54,40 +57,17 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>ID Pesanan</th>
+                            <th>Tanggal</th> <!-- Diubah jadi Tanggal agar sinkron dengan database transaksi -->
                             <th>Nama Produk</th>
-                            <th>Kategori</th>
+                            <th>Tipe</th>
                             <th>Jumlah</th>
                             <th>Total Harga</th>
-                            <th>Status</th>
                         </tr>
                     </thead>
-                <tbody>
-                    <tr>
-                        <td>PC-1011</td>
-                        <td>Chef Baja</td>
-                        <td>Dapur</td>
-                        <td>3</td>
-                        <td>Rp 1.250.999</td>
-                        <td><span class="status sukses">Selesai</span></td>
-                    </tr>
-                    <tr>
-                        <td>PC-1071</td>
-                        <td>Baja</td>
-                        <td>Outdoor</td>
-                        <td>6</td>
-                        <td>Rp 2.250.999</td>
-                        <td><span class="status sukses">Selesai</span></td>
-                    </tr>
-                    <tr>
-                        <td>PC-1019</td>
-                        <td>Damaskus</td>
-                        <td>Koleksi</td>
-                        <td>2</td>
-                        <td>Rp 250.999</td>
-                        <td><span class="status pending">Pending</span></td>
-                    </tr>
-                </tbody>
+                    <!-- 2. UBAH BODY TABEL AGAR DIISI OTOMATIS OLEH JS -->
+                    <tbody id="bodyDashboardTransaksi">
+                        <!-- Data asli disuntik di sini -->
+                    </tbody>
                 </table>
             </div>
         </main>

@@ -16,7 +16,7 @@
         
         <!-- 1. BAGIAN SIDEBAR (Sesuai Desain Anda) -->
         <div class="sidebar">
-            <h1 class="sidebar-title">Stok</h1>
+            <h2 class="sidebar-title">Transaksi</h2>
             <ul>
                 <li><a href="dashboard.html">Dashboard</a></li>
                 <li><a href="stok.html">Stok</a></li>
@@ -31,22 +31,65 @@
             
             <!-- HALAMAN TRANSAKSI -->
             <div id="halamanTransaksi">
-                <h2>📊 Laporan Transaksi</h2>
-                
-                <table class="tabel-transaksi">
-                    <thead>
-                        <tr>
-                            <th>Tanggal</th>
-                            <th>Nama Produk</th>
-                            <th>Tipe</th>
-                            <th>Jumlah</th>
-                            <th>Total Harga</th>
-                        </tr>
-                    </thead>
-                    <tbody id="bodyTransaksi">
-                        <!-- Data akan otomatis disuntik via transaksi.js -->
-                    </tbody>
-                </table>
+    <!-- 1. TAMBAHKAN PEMBUNGKUS HEADER & TOMBOL TAMBAH BARU -->
+            <div class="header-transaksi" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h1>📊 Laporan Transaksi</h1>
+                <button class="btn-tambah" id="btnBukaModal">➕ Catat Transaksi</button>
+            </div>
+            
+            <table class="tabel-transaksi">
+                <thead>
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>Nama Produk</th>
+                        <th>Tipe</th>
+                        <th>Jumlah</th>
+                        <th>Total Harga</th>
+                        <th>Aksi</th> <!-- 2. TAMBAHKAN KOLOM AKSI DI SINI -->
+                    </tr>
+                </thead>
+                <tbody id="bodyTransaksi">
+                    <!-- Data dan Tombol Edit/Hapus akan otomatis disuntik via transaksi.js -->
+                </tbody>
+            </table>
+        </div>
+            <div id="modalTransaksi" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn" id="btnTutupModal">&times;</span>
+                    <h3 id="modalTitle">Catat Transaksi</h3>
+                    <form id="formTransaksi">
+                        <input type="hidden" id="transaksiId">
+
+                        <div class="form-group">
+                            <label for="trxNama">Nama Produk</label>
+                            <!-- MENGUBAH INPUT MENJADI SELECT DROPDOWN -->
+                            <select id="trxNama" required>
+                                <option value="">-- Pilih Produk --</option>
+                                <!-- Pilihan produk akan dimasukkan secara dinamis oleh JavaScript -->
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="trxTipe">Tipe Transaksi</label>
+                            <select id="trxTipe" required>
+                                <option value="Masuk">Masuk</option>
+                                <option value="Keluar">Keluar</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="trxJumlah">Jumlah</label>
+                            <input type="number" id="trxJumlah" required min="1">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="trxHarga">Total Harga (Rp)</label>
+                            <!-- Ditambah readonly dan placeholder agar terlihat profesional -->
+                            <input type="number" id="trxHarga" required min="0" readonly placeholder="Otomatis Terhitung">
+                        </div>
+                        <button type="submit" class="btn-simpan">Simpan</button>
+                    </form>
+                </div>
             </div>
 
         </div> <!-- /.main-content -->
