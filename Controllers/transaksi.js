@@ -161,16 +161,35 @@ formTransaksi.addEventListener('submit', async (e) => {
     }
 });
 
-// 5. UPDATE PREPARATION (Lempar data baris ke dalam form modal)
-window.siapkanEdit = function(id, nama, tipe, jumlah, harga) {
-    modalTitle.innerText = "Ubah Data Transaksi";
-    transaksiIdInput.value = id;
-    document.getElementById('trxNama').value = nama;
-    document.getElementById('trxTipe').value = tipe;
-    document.getElementById('trxJumlah').value = jumlah;
-    document.getElementById('trxHarga').value = harga;
-    modal.style.display = "block";
-};
+// Ganti fungsi siapkanEdit lama Anda dengan yang ini:
+async function siapkanEdit(id, nama_produk, tipe, jumlah, total_harga) {
+    // 1. Ubah judul dan buka modal agar pengguna langsung melihat reaksi klik
+    document.getElementById('modalTitle').innerText = "Ubah Data Transaksi";
+    document.getElementById('modalTransaksi').style.display = "block";
+    document.getElementById('transaksiId').value = id;
+
+    // 2. TUNGGU dropdown produk selesai dimuat dari database
+    await muatDropdownProduk(); 
+
+    // 3. Set nilai input teks dan angka biasa
+    document.getElementById('tipe').value = tipe; // Pastikan ID ini sesuai di HTML Anda
+    document.getElementById('jumlah').value = jumlah; // Pastikan ID ini sesuai di HTML Anda
+    document.getElementById('totalHarga').value = total_harga; // Pastikan ID ini sesuai di HTML Anda
+
+    // 4. LOGIKA PINTAR: Cocokkan Nama Produk di Dropdown
+    const dropdownProduk = document.getElementById('id_produk'); // PENTING: Ganti 'id_produk' dengan ID <select> produk Anda di HTML!
+    
+    if (dropdownProduk) {
+        // Lakukan perulangan untuk mengecek setiap pilihan di dropdown
+        for (let i = 0; i < dropdownProduk.options.length; i++) {
+            // Jika teks di dropdown (misal: "Belimbing") SAMA dengan nama_produk dari tabel
+            if (dropdownProduk.options[i].text === nama_produk) {
+                dropdownProduk.selectedIndex = i; // Pilih opsi ini!
+                break; // Hentikan pencarian jika sudah ketemu
+            }
+        }
+    }
+}
 
 // 6. DELETE DATA (Hapus riwayat transaksi)
 window.hapusTransaksi = async function(id) {

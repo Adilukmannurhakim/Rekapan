@@ -322,3 +322,24 @@ table th{
 
 .btn-aksi-edit:hover { background-color: #e0a800; }
 .btn-aksi-hapus:hover { background-color: #bd2130; }
+
+/* Kelas tambahan jika mode gelap aktif */
+body.dark-mode {
+    background-color: #1a1a2e; /* Ubah background biru jadi gelap */
+    color: #ffffff;
+}
+
+body.dark-mode .konten-box-putih, 
+body.dark-mode .card {
+    background-color: #24243e; /* Ubah box putih jadi abu-abu gelap */
+    color: #ffffff;
+}
+
+body.dark-mode .tabel-stok-gaya th {
+    background-color: #2d2d44;
+    color: #ffffff;
+}
+
+body.dark-mode .tabel-stok-gaya td {
+    color: #e0e0e0;
+}
